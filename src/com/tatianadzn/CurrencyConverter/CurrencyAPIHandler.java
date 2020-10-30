@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 public abstract class CurrencyAPIHandler {
 
     //from the config file later
-    private static String myURL = "https://api.currencyfreaks.com/latest" +
+    private static final String myURL = "https://api.currencyfreaks.com/latest" +
                                     "?apikey=fbd79c17f4c549e9b72b07eaf064c128" +
                                     "&format=xml";
 

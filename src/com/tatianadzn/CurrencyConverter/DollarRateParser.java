@@ -2,7 +2,7 @@ package com.tatianadzn.CurrencyConverter;
 
 import org.w3c.dom.Document;
 
-public abstract class JSONParsing {
+public abstract class DollarRateParser {
     private static double dollarRate;
 
     public static double getDollarRate(){
