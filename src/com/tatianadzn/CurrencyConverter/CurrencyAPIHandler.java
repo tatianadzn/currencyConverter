@@ -1,14 +1,17 @@
 package com.tatianadzn.CurrencyConverter;
 
-import java.io.IOException;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+
 public abstract class CurrencyAPIHandler {
-    private static String result;
 
     //from the config file later
     private static String myURL = "https://api.currencyfreaks.com/latest" +
@@ -16,7 +19,7 @@ public abstract class CurrencyAPIHandler {
                                     "&format=xml";
 
 
-    public static String getResponse(){
+    public static Document getResponse(){
         try{
             HttpRequest request = HttpRequest
                     .newBuilder()
@@ -24,16 +27,21 @@ public abstract class CurrencyAPIHandler {
                     .GET()
                     .build();
 
-            result = HttpClient
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder;
+            builder = factory.newDocumentBuilder();
+
+            return builder.parse(new InputSource(new StringReader(HttpClient
                     .newBuilder()
                     .build()
-                    .send(request, HttpResponse.BodyHandlers.ofString())
-                    .body();
+                    .send(request, HttpResponse.BodyHandlers.ofString()).body())));
 
-        }catch (URISyntaxException|IOException|InterruptedException e){
+
+        }catch (Exception e){
             System.out.println(e.getMessage());
+            System.out.println("something went wrong, try again later");
+            System.exit(1);
         }
-        System.out.println(result);
-        return result;
+        return null;
     }
 }
