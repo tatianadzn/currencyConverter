@@ -8,21 +8,26 @@ public class CurrencyConverter {
 
     public CurrencyConverter(){
         currenciesRates = CurrenciesRateParser.getCurrenciesRates();
-
     }
 
-    public void convert(){
-        getInputValueFromUser();
+    public void convert(Double inputValue){
+        try{
+            if (inputValue <=0)
+                throw new Exception("Invalid input: negative number");
+            this.inputValue = inputValue;
+
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return;
+        }
         convertInputCurrToOutputCurr();
+
     }
 
     private void convertInputCurrToOutputCurr(){
         dollarValueInRUB = inputValue * currenciesRates[0];
         euroValueInRUB = inputValue * currenciesRates[1];
-    }
-
-    private void getInputValueFromUser(){
-        inputValue = InputHandler.getInputValue();
     }
 
     @Override
