@@ -9,8 +9,12 @@ public abstract class CurrenciesRateParser {
      */
     private static double[] currenciesRates = new double[2];
 
-    public static double[] getCurrenciesRates(){
-        parseResponse(CurrencyAPIHandler.getResponse());
+    public static double[] getCurrenciesRates(String fileConfigPath) throws Exception{
+        try{
+            parseResponse(CurrencyAPIHandler.getResponse(fileConfigPath));
+        }catch (Exception e){
+            throw e;
+        }
         return currenciesRates;
     }
 

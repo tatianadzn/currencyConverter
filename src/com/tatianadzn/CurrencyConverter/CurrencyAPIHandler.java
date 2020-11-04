@@ -1,5 +1,6 @@
 package com.tatianadzn.CurrencyConverter;
 
+import com.tatianadzn.ConfigLoader;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import javax.xml.parsers.DocumentBuilder;
@@ -13,14 +14,10 @@ import java.net.http.HttpResponse;
 
 public abstract class CurrencyAPIHandler {
 
-    //from the config file later
-    private static final String myURL = "https://api.currencyfreaks.com/latest" +
-                                    "?apikey=fbd79c17f4c549e9b72b07eaf064c128" +
-                                    "&format=xml";
-
-
-    public static Document getResponse(){
+    public static Document getResponse(String configFilePath) throws Exception{
+        Document response;
         try{
+            String myURL = ConfigLoader.loadPropsFromConfig(configFilePath);
             HttpRequest request = HttpRequest
                     .newBuilder()
                     .uri(new URI(myURL))
@@ -31,17 +28,14 @@ public abstract class CurrencyAPIHandler {
             DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
 
-            return builder.parse(new InputSource(new StringReader(HttpClient
+            response = builder.parse(new InputSource(new StringReader(HttpClient
                     .newBuilder()
                     .build()
                     .send(request, HttpResponse.BodyHandlers.ofString()).body())));
 
-
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("something went wrong, try again later");
-            System.exit(1);
+            throw e;
         }
-        return null;
+        return response;
     }
 }

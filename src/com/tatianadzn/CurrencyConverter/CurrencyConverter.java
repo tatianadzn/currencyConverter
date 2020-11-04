@@ -6,11 +6,17 @@ public class CurrencyConverter {
     private double[] currenciesRates;
     private double euroValueInRUB;
 
-    public CurrencyConverter(){
-        currenciesRates = CurrenciesRateParser.getCurrenciesRates();
+    public CurrencyConverter(String configFilePath) throws Exception{
+        try{
+            currenciesRates = CurrenciesRateParser.getCurrenciesRates(configFilePath);
+        }catch (Exception e){
+            throw e;
+        }
     }
 
-    public void convert(Double inputValue){
+
+
+    public void convert(Double inputValue) throws Exception{
         try{
             if (inputValue <=0)
                 throw new Exception("Invalid input: negative number");
@@ -18,11 +24,9 @@ public class CurrencyConverter {
 
 
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            return;
+            throw e;
         }
         convertInputCurrToOutputCurr();
-
     }
 
     private void convertInputCurrToOutputCurr(){
