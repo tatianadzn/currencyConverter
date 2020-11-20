@@ -9,13 +9,8 @@ public abstract class ConfigLoader {
         Properties props = new Properties();
         String APIUrl;
 
-        try{
-            props.load(new FileInputStream(filePath));
-            APIUrl = props.getProperty("APIUrl");
-
-        }catch (Exception e){
-            throw e;
-        }
+        props.load(new FileInputStream(filePath));
+        APIUrl = props.getProperty("APIUrl");
 
         return APIUrl;
     }

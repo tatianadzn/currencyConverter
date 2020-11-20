@@ -7,25 +7,16 @@ public class CurrencyConverter {
     private double euroValueInRUB;
 
     public CurrencyConverter(String configFilePath) throws Exception{
-        try{
-            currenciesRates = CurrenciesRateParser.getCurrenciesRates(configFilePath);
-        }catch (Exception e){
-            throw e;
-        }
+        currenciesRates = CurrenciesRateParser.getCurrenciesRates(configFilePath);
     }
 
 
 
     public void convert(Double inputValue) throws Exception{
-        try{
-            if (inputValue <=0)
-                throw new Exception("Invalid input: negative number");
-            this.inputValue = inputValue;
+        if (inputValue <=0)
+            throw new Exception("Invalid input: negative number");
 
-
-        }catch (Exception e){
-            throw e;
-        }
+        this.inputValue = inputValue;
         convertInputCurrToOutputCurr();
     }
 

@@ -16,26 +16,22 @@ public abstract class CurrencyAPIHandler {
 
     public static Document getResponse(String configFilePath) throws Exception{
         Document response;
-        try{
-            String myURL = ConfigLoader.loadPropsFromConfig(configFilePath);
-            HttpRequest request = HttpRequest
-                    .newBuilder()
-                    .uri(new URI(myURL))
-                    .GET()
-                    .build();
+        String myURL = ConfigLoader.loadPropsFromConfig(configFilePath);
+        HttpRequest request = HttpRequest
+                .newBuilder()
+                .uri(new URI(myURL))
+                .GET()
+                .build();
 
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder;
-            builder = factory.newDocumentBuilder();
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder;
+        builder = factory.newDocumentBuilder();
 
-            response = builder.parse(new InputSource(new StringReader(HttpClient
-                    .newBuilder()
-                    .build()
-                    .send(request, HttpResponse.BodyHandlers.ofString()).body())));
+        response = builder.parse(new InputSource(new StringReader(HttpClient
+                .newBuilder()
+                .build()
+                .send(request, HttpResponse.BodyHandlers.ofString()).body())));
 
-        }catch (Exception e){
-            throw e;
-        }
         return response;
     }
 }
