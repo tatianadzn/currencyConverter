@@ -2,35 +2,33 @@ package com.tatianadzn.CurrencyConverter;
 
 public class CurrencyConverter {
     private double inputValue;
-    private double dollarValueInRUB;
-    private double[] currenciesRates;
-    private double euroValueInRUB;
+    private double outputValue;
+    private double currencyRate;
+    private Currency inputCurrency;
+    private Currency outputCurrency = Currency.RUB;
 
-    public CurrencyConverter(String configFilePath) throws Exception{
-        currenciesRates = CurrenciesRateParser.getCurrenciesRates(configFilePath);
+    public CurrencyConverter(String configFilePath, Currency outputCurrency) throws Exception{
+        currencyRate = CurrencyRateParser.getCurrencyRate(configFilePath, outputCurrency);
+        this.inputCurrency = outputCurrency;
     }
-
 
 
     public void convert(Double inputValue) throws Exception{
         if (inputValue <=0)
-            throw new Exception("Invalid input: negative number");
+            throw new Exception("Invalid inputCurrency: negative number");
 
         this.inputValue = inputValue;
         convertInputCurrToOutputCurr();
     }
 
     private void convertInputCurrToOutputCurr(){
-        dollarValueInRUB = inputValue * currenciesRates[0];
-        euroValueInRUB = inputValue * currenciesRates[1];
+        outputValue = inputValue * currencyRate;
     }
 
     @Override
     public String toString(){
-        return inputValue + " USD" + " = "
-                + String.format("%.2f", dollarValueInRUB) + " RUB\n"
-                + inputValue + " EUR" + " = "
-                + String.format("%.2f", euroValueInRUB) + " RUB";
+        return inputValue + " " + inputCurrency.name() + " = "
+                + String.format("%.2f", outputValue) + " " + outputCurrency.name();
     }
 
 
